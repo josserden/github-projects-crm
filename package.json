@@ -1,0 +1,22 @@
+{
+  "name": "github-projects-crm",
+  "version": "1.0.0",
+  "description": "CRM система для публічних проєктів GitHub",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "docker-compose up",
+    "dev": "docker-compose -f docker-compose.dev.yml up -d",
+    "build": "docker-compose build",
+    "client": "npm run --prefix client",
+    "server": "npm run --prefix server",
+    "client:dev": "npm run --prefix client dev",
+    "server:dev": "npm run --prefix server start:dev",
+    "clean": "docker-compose down -v"
+  },
+  "author": "",
+  "license": "MIT"
+}
