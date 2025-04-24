@@ -1,4 +1,17 @@
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
+import { GithubService } from './github.service';
+import { ConfigModule } from '@nestjs/config';
 
-@Module({})
+@Module({
+  imports: [
+    HttpModule.register({
+      timeout: 5000,
+      maxRedirects: 5,
+    }),
+    ConfigModule,
+  ],
+  providers: [GithubService],
+  exports: [GithubService],
+})
 export class GithubModule {}
