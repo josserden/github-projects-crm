@@ -69,4 +69,15 @@ export class AuthService {
 
     return user;
   }
+
+  async logout(userId: string) {
+    const user = await this.usersService.findById(userId);
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    // Invalidate the user's session or token here if needed
+    return { message: 'Logged out successfully' };
+  }
 }

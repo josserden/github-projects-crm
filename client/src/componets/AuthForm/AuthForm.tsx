@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "../../libs/utils";
@@ -10,18 +11,30 @@ const schema = z.object({
 
 export type AuthFormDataSchemaType = z.infer<typeof schema>;
 
-type AuthFormProps = {
+interface AuthFormProps {
   onSubmit: (data: z.infer<typeof schema>) => void;
   buttonText: string;
+  isLoading?: boolean;
+}
+
+const defaultValues = {
+  email: "user@example.com",
+  password: "Password123!",
 };
 
-export const AuthForm = ({ onSubmit, buttonText }: AuthFormProps) => {
+export const AuthForm: FC<AuthFormProps> = ({
+  onSubmit,
+  buttonText,
+  isLoading,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
+    defaultValues,
+    mode: "onChange",
   });
 
   return (
@@ -59,7 +72,10 @@ export const AuthForm = ({ onSubmit, buttonText }: AuthFormProps) => {
         )}
       </div>
 
-      <button type="submit" className="btn btn-primary w-full">
+      <button type="submit" className="btn btn-primary w-full text-white">
+        {isLoading && (
+          <span className="loading loading-spinner loading-sm ml-1" />
+        )}
         {buttonText}
       </button>
     </form>
