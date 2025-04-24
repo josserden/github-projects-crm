@@ -1,7 +1,13 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider } from "react-router";
+import { router } from "./router.tsx";
+
+const queryClient = new QueryClient();
+
 export const App = () => {
   return (
-    <div className="container">
-      <h1 className="text-3xl font-bold underline">Hello World</h1>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 };
