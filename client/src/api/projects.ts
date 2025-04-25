@@ -1,41 +1,25 @@
 import axios from "axios";
-import { StorageKeys, StorageService } from "../libs/storageService";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
+import { getAuthHeaders } from "@/api/auth.ts";
 
-const getAuthHeaders = () => {
-  const token = StorageService.getItem(StorageKeys.token);
-  return {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-};
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 export const getProjects = async () => {
-  const response = await axios.get(`${API_URL}/projects`, getAuthHeaders());
+  const response = await axios.get(`${API_URL}/api/projects`, getAuthHeaders());
   return response.data;
 };
 
 export const createProject = async ({ repoPath }: { repoPath: string }) => {
-  const response = await axios.post(
-    `${API_URL}/projects`,
-    { repoPath },
-    getAuthHeaders(),
-  );
+  const response = await axios.post(`${API_URL}/api/projects`, { repoPath }, getAuthHeaders());
   return response.data;
 };
 
 export const deleteProject = async (id: string) => {
-  await axios.delete(`${API_URL}/projects/${id}`, getAuthHeaders());
+  await axios.delete(`${API_URL}/api/projects/${id}`, getAuthHeaders());
   return id;
 };
 
 export const refreshProject = async (id: string) => {
-  const response = await axios.post(
-    `${API_URL}/projects/${id}/refresh`,
-    {},
-    getAuthHeaders(),
-  );
+  const response = await axios.post(`${API_URL}/projects/${id}/refresh`, {}, getAuthHeaders());
   return response.data;
 };

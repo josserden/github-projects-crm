@@ -1,5 +1,6 @@
 import axios from "axios";
-import { StorageKeys, StorageService } from "../libs/storageService.ts";
+
+import { StorageKeys, StorageService } from "@/libs/storageService.ts";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
 
@@ -7,8 +8,6 @@ export interface LoginPayload {
   email: string;
   password: string;
 }
-
-console.log("API_URL", API_URL);
 
 export const getAuthHeaders = () => {
   const token = StorageService.getItem(StorageKeys.token);

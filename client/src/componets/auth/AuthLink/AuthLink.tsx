@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router";
-import { Routes } from "../../../route/routes.ts";
+
+import { Routes } from "@/route/routes.ts";
 
 type Props = {
   to: Routes;

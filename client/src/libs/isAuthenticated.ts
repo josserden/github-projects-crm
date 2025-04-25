@@ -1,4 +1,3 @@
 import { StorageKeys, StorageService } from "./storageService.ts";
 
-export const isAuthenticated = () =>
-  !!StorageService.getItem(StorageKeys.token);
+export const isAuthenticated = () => !!StorageService.getItem(StorageKeys.token);

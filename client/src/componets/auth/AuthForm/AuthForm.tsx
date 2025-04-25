@@ -1,8 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
+
 import { z } from "zod";
-import { cn } from "../../../libs/utils.ts";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { cn } from "@/libs/utils.ts";
 
 const schema = z.object({
   email: z.string().email("Invalid email address"),
@@ -22,11 +25,7 @@ const defaultValues = {
   password: "Password123!",
 };
 
-export const AuthForm: FC<AuthFormProps> = ({
-  onSubmit,
-  buttonText,
-  isLoading,
-}) => {
+export const AuthForm: FC<AuthFormProps> = ({ onSubmit, buttonText, isLoading }) => {
   const {
     register,
     handleSubmit,
@@ -43,31 +42,21 @@ export const AuthForm: FC<AuthFormProps> = ({
         <label className="label">Email</label>
         <input
           type="email"
-          className={cn(
-            "input input-bordered w-full",
-            errors.email && "input-error",
-          )}
+          className={cn("input input-bordered w-full", errors.email && "input-error")}
           placeholder="Email"
           {...register("email")}
         />
-        {errors.email && (
-          <div className="text-error text-sm mt-1">{errors.email.message}</div>
-        )}
+        {errors.email && <div className="text-error text-sm mt-1">{errors.email.message}</div>}
 
         <label className="label">Password</label>
         <input
           type="password"
-          className={cn(
-            "input input-bordered w-full",
-            errors.password && "input-error",
-          )}
+          className={cn("input input-bordered w-full", errors.password && "input-error")}
           placeholder="Password"
           {...register("password")}
         />
         {errors.password && (
-          <div className="text-error text-sm mt-1">
-            {errors.password.message}
-          </div>
+          <div className="text-error text-sm mt-1">{errors.password.message}</div>
         )}
 
         <button
@@ -75,9 +64,7 @@ export const AuthForm: FC<AuthFormProps> = ({
           className="btn btn-primary w-full mt-4 text-white"
           disabled={isLoading}
         >
-          {isLoading && (
-            <span className="loading loading-spinner loading-sm mr-2" />
-          )}
+          {isLoading && <span className="loading loading-spinner loading-sm mr-2" />}
           {buttonText}
         </button>
       </fieldset>

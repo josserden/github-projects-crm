@@ -1,9 +1,7 @@
 export const StorageService = {
   setItem: <T>(key: string, value: T, shouldStringify = true): void => {
     try {
-      const valueToStore = shouldStringify
-        ? JSON.stringify(value)
-        : String(value);
+      const valueToStore = shouldStringify ? JSON.stringify(value) : String(value);
 
       localStorage.setItem(key, valueToStore);
     } catch (error) {

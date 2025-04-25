@@ -1,6 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { createProject } from "../../../api/projects.ts";
+import { useMutation } from "@tanstack/react-query";
+
+import { createProject } from "@/api/projects.ts";
 
 type AddProjectFormProps = {
   onSuccess: () => void;
@@ -53,11 +54,7 @@ export const AddProjectForm = ({ onSuccess }: AddProjectFormProps) => {
             value={repoPath}
             onChange={(e) => setRepoPath(e.target.value)}
           />
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={isPending}
-          >
+          <button type="submit" className="btn btn-primary" disabled={isPending}>
             {isPending ? (
               <>
                 <span className="loading loading-spinner loading-sm"></span>
@@ -73,8 +70,7 @@ export const AddProjectForm = ({ onSuccess }: AddProjectFormProps) => {
       </div>
 
       <div className="text-sm opacity-70">
-        Enter the repository path in the format: owner/repository (e.g.
-        facebook/react)
+        Enter the repository path in the format: owner/repository (e.g. facebook/react)
       </div>
     </form>
   );

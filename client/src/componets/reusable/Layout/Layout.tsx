@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren } from "react";
-import { Footer } from "./Footer.tsx";
-import { Header } from "./Header.tsx";
+
+import { Footer } from "@/componets/reusable/Layout/Footer.tsx";
+import { Header } from "@/componets/reusable/Layout/Header.tsx";
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (

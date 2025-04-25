@@ -1,9 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { useState } from "react";
-import { deleteProject, getProjects, refreshProject } from "../../api/projects";
-import { AddProjectForm } from "../../componets/form/AddProjectForm";
-import { StorageKeys, StorageService } from "../../libs/storageService";
 import { useNavigate } from "react-router";
+
+import { deleteProject, getProjects, refreshProject } from "@/api/projects";
+import { AddProjectForm } from "@/componets/form/AddProjectForm";
+import { StorageKeys, StorageService } from "@/libs/storageService";
 
 type Project = {
   id: string;
@@ -88,9 +90,7 @@ export const ProjectsPage = () => {
         </div>
       ) : (
         <ul className="list bg-base-100 rounded-box shadow-md">
-          <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">
-            Your GitHub Projects
-          </li>
+          <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">Your GitHub Projects</li>
 
           {projects.length === 0 ? (
             <li className="p-4">No projects found. Add your first project!</li>
@@ -106,9 +106,7 @@ export const ProjectsPage = () => {
                 </div>
                 <div>
                   <div className="font-medium">{project.name}</div>
-                  <div className="text-xs uppercase font-semibold opacity-60">
-                    {project.owner}
-                  </div>
+                  <div className="text-xs uppercase font-semibold opacity-60">{project.owner}</div>
                 </div>
                 <div className="list-col-wrap text-xs space-y-1">
                   <p>
@@ -124,20 +122,16 @@ export const ProjectsPage = () => {
                   </p>
 
                   <p>
-                    <span className="font-semibold">Stars:</span>{" "}
-                    {project.stars}
+                    <span className="font-semibold">Stars:</span> {project.stars}
                   </p>
                   <p>
-                    <span className="font-semibold">Forks:</span>{" "}
-                    {project.forks}
+                    <span className="font-semibold">Forks:</span> {project.forks}
                   </p>
                   <p>
-                    <span className="font-semibold">Issues:</span>{" "}
-                    {project.issues}
+                    <span className="font-semibold">Issues:</span> {project.issues}
                   </p>
                   <p>
-                    <span className="font-semibold">Added:</span>{" "}
-                    {formatDate(project.addedAt)}
+                    <span className="font-semibold">Added:</span> {formatDate(project.addedAt)}
                   </p>
                 </div>
 
@@ -146,8 +140,7 @@ export const ProjectsPage = () => {
                   onClick={() => refreshMutation.mutate(project.id)}
                   disabled={refreshMutation.isPending}
                 >
-                  {refreshMutation.isPending &&
-                  refreshMutation.variables === project.id ? (
+                  {refreshMutation.isPending && refreshMutation.variables === project.id ? (
                     <span className="loading loading-spinner loading-sm" />
                   ) : (
                     <svg
@@ -174,8 +167,7 @@ export const ProjectsPage = () => {
                   onClick={() => deleteMutation.mutate(project.id)}
                   disabled={deleteMutation.isPending}
                 >
-                  {deleteMutation.isPending &&
-                  deleteMutation.variables === project.id ? (
+                  {deleteMutation.isPending && deleteMutation.variables === project.id ? (
                     <span className="loading loading-spinner loading-sm"></span>
                   ) : (
                     <svg

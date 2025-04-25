@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { useNavigate } from "react-router";
-import { logout } from "../../../api/auth.ts";
-import { Routes } from "../../../route/routes.ts";
+
+import { logout } from "@/api/auth.ts";
+import { Routes } from "@/route/routes.ts";
 
 export const Header: FC = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export const Header: FC = () => {
       console.error("Logout failed", error);
     }
   };
+
   return (
     <header className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
