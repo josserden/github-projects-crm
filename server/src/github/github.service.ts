@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { lastValueFrom } from 'rxjs';
 
 import { HttpService } from '@nestjs/axios';
@@ -12,6 +13,20 @@ interface GithubRepositoryData {
   forks: number;
   issues: number;
   createdAt: number;
+}
+
+interface GithubApiResponse {
+  html_url: string;
+  stargazers_count: number;
+  forks_count: number;
+  open_issues_count: number;
+  created_at: string;
+}
+
+interface GithubApiErrorResponse {
+  response: {
+    status: number;
+  };
 }
 
 @Injectable()
@@ -39,15 +54,18 @@ export class GithubService {
 
     try {
       const response = await lastValueFrom(
-        this.httpService.get(`${this.baseUrl}/repos/${owner}/${name}`, {
-          headers: {
-            Accept: 'application/vnd.github.v3+json',
-            'User-Agent': 'github-projects-crm',
+        this.httpService.get<GithubApiResponse>(
+          `${this.baseUrl}/repos/${owner}/${name}`,
+          {
+            headers: {
+              Accept: 'application/vnd.github.v3+json',
+              'User-Agent': 'github-projects-crm',
+            },
           },
-        }),
+        ),
       );
 
-      const { data } = response;
+      const data = response.data;
 
       return {
         owner,
@@ -59,7 +77,8 @@ export class GithubService {
         createdAt: Math.floor(new Date(data.created_at).getTime() / 1000),
       };
     } catch (error) {
-      if (error.response && error.response.status === 404) {
+      const axiosError = error as AxiosError<GithubApiErrorResponse>;
+      if (axiosError.response && axiosError.response.status === 404) {
         throw new NotFoundException(`Repository not found: ${repoPath}`);
       }
       throw error;
