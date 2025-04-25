@@ -29,12 +29,13 @@ export const ProjectCard: FC<Props> = ({ project }) => {
           className="size-10 rounded-box"
           src={`https://github.com/${project.owner}.png`}
           alt={project.owner}
+          loading="lazy"
         />
       </div>
 
       <div>
-        <div className="font-medium">{project.name}</div>
-        <div className="text-xs uppercase font-semibold opacity-60">{project.owner}</div>
+        <h3 className="font-medium">{project.name}</h3>
+        <p className="text-xs uppercase font-semibold opacity-60">{project.owner}</p>
       </div>
 
       <div className="list-col-wrap text-xs space-y-1">
