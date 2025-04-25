@@ -50,3 +50,9 @@ npm start
 - POST /api/projects - Додати проєкт
 - PUT /api/projects/:id - Оновити проєкт
 - DELETE /api/projects/:id - Видалити проєкт
+
+### Підтвердження робочої системи локального середовища
+
+- Клієнт ![client.png](client.png)
+- Сервер ![server.png](server.png)
+- База даних ![db.png](db.png)
