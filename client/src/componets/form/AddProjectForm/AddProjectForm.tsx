@@ -1,46 +1,63 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { createProject } from "@/api/projects.ts";
+import { ErrorMessage } from "@/componets/auth/ErrorMessage";
+import { Spinner } from "@/componets/common/Spinner";
+import { cn } from "@/libs/utils";
 
 type AddProjectFormProps = {
   onSuccess: () => void;
 };
 
+const schema = z.object({
+  repoPath: z
+    .string()
+    .min(1, "Repository path is required")
+    .refine((val) => val.includes("/"), {
+      message: "Invalid repository path. Format should be 'owner/repo'",
+    }),
+});
+
+type FormData = z.infer<typeof schema>;
+
 export const AddProjectForm = ({ onSuccess }: AddProjectFormProps) => {
-  const [repoPath, setRepoPath] = useState("");
-  const [error, setError] = useState("");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    setError: setFormError,
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      repoPath: "",
+    },
+    mode: "onChange",
+  });
 
   const { mutate, isPending } = useMutation({
     mutationFn: createProject,
     onSuccess: () => {
-      setRepoPath("");
-      setError("");
+      reset();
       onSuccess();
     },
     onError: (err: any) => {
-      setError(err.response?.data?.message || "Failed to add project");
+      setFormError("repoPath", {
+        type: "server",
+        message: err.response?.data?.message || "Failed to add project",
+      });
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!repoPath.trim()) {
-      setError("Repository path is required");
-      return;
-    }
-
-    if (!repoPath.includes("/")) {
-      setError("Invalid repository path. Format should be 'owner/repo'");
-      return;
-    }
-
-    mutate({ repoPath });
+  const onSubmit = (data: FormData) => {
+    mutate({ repoPath: data.repoPath });
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
       <div className="form-control">
         <label className="label">
           <span className="label-text">GitHub Repository Path</span>
@@ -50,14 +67,13 @@ export const AddProjectForm = ({ onSuccess }: AddProjectFormProps) => {
           <input
             type="text"
             placeholder="e.g. facebook/react"
-            className="input input-bordered flex-1"
-            value={repoPath}
-            onChange={(e) => setRepoPath(e.target.value)}
+            className={cn("input flex-1", errors.repoPath ? "input-error" : "input-bordered")}
+            {...register("repoPath")}
           />
-          <button type="submit" className="btn btn-primary" disabled={isPending}>
+          <button type="submit" className="btn btn-primary text-white" disabled={isPending}>
             {isPending ? (
               <>
-                <span className="loading loading-spinner loading-sm"></span>
+                <Spinner />
                 Adding...
               </>
             ) : (
@@ -66,12 +82,12 @@ export const AddProjectForm = ({ onSuccess }: AddProjectFormProps) => {
           </button>
         </div>
 
-        {error && <div className="text-error text-sm mt-1">{error}</div>}
+        {errors.repoPath && <ErrorMessage>{errors.repoPath.message}</ErrorMessage>}
       </div>
 
-      <div className="text-sm opacity-70">
+      <p className="text-sm opacity-70">
         Enter the repository path in the format: owner/repository (e.g. facebook/react)
-      </div>
+      </p>
     </form>
   );
 };
