@@ -1,10 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { deleteProject, getProjects, refreshProject } from "@/api/projects";
 import { AddProjectForm } from "@/componets/form/AddProjectForm";
+import { isAuthenticated } from "@/libs/isAuthenticated.ts";
 import { StorageKeys, StorageService } from "@/libs/storageService";
 
 type Project = {
@@ -27,7 +28,10 @@ export const ProjectsPage = () => {
   const { data: projects = [], isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: getProjects,
+    enabled: isAuthenticated(),
   });
+
+  console.log("projects", projects);
 
   const deleteMutation = useMutation({
     mutationFn: deleteProject,
