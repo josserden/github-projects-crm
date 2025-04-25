@@ -38,46 +38,53 @@ export const AuthForm: FC<AuthFormProps> = ({
   });
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 max-w-sm mx-auto"
-    >
-      <div>
-        <label className="block mb-1">Email</label>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <fieldset className="fieldset">
+        <label className="label">Email</label>
         <input
           type="email"
-          {...register("email")}
           className={cn(
             "input input-bordered w-full",
             errors.email && "input-error",
           )}
+          placeholder="Email"
+          {...register("email")}
         />
         {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}</p>
+          <div className="text-error text-sm mt-1">{errors.email.message}</div>
         )}
-      </div>
 
-      <div>
-        <label className="block mb-1">Password</label>
+        <label className="label">Password</label>
         <input
           type="password"
-          {...register("password")}
           className={cn(
             "input input-bordered w-full",
             errors.password && "input-error",
           )}
+          placeholder="Password"
+          {...register("password")}
         />
         {errors.password && (
-          <p className="text-red-500 text-sm">{errors.password.message}</p>
+          <div className="text-error text-sm mt-1">
+            {errors.password.message}
+          </div>
         )}
-      </div>
 
-      <button type="submit" className="btn btn-primary w-full text-white">
-        {isLoading && (
-          <span className="loading loading-spinner loading-sm ml-1" />
-        )}
-        {buttonText}
-      </button>
+        <div className="mt-2">
+          <a className="link link-hover text-sm">Forgot password?</a>
+        </div>
+
+        <button
+          type="submit"
+          className="btn btn-primary w-full mt-4"
+          disabled={isLoading}
+        >
+          {isLoading && (
+            <span className="loading loading-spinner loading-sm mr-2" />
+          )}
+          {buttonText}
+        </button>
+      </fieldset>
     </form>
   );
 };
