@@ -1,7 +1,5 @@
 import { CreateUserDto } from '../users/dto/create-user-dto';
-import { User } from '../users/entities/users.entities';
 import { AuthService } from './auth.service';
-import { GetUser } from './decorators/get-user.decorator';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
@@ -51,7 +49,7 @@ export class AuthController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Logout the user' })
   @ApiResponse({ status: 200, description: 'Logout successful' })
-  logout(@GetUser() user: User) {
+  logout() {
     return { message: 'Logout successful' };
   }
 }
