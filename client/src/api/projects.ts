@@ -2,6 +2,18 @@ import axios from "axios";
 
 import { getAuthHeaders } from "@/api/auth.ts";
 
+export interface Project {
+  id: string;
+  owner: string;
+  name: string;
+  url: string;
+  stars: number;
+  forks: number;
+  issues: number;
+  addedAt: string;
+  updatedAt: string;
+}
+
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 export const getProjects = async () => {
