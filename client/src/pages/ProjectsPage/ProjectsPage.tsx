@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
+import { Loader } from "@/componets/common/Loader";
 import { deleteProject, getProjects, refreshProject } from "@/api/projects";
 import { AddProjectForm } from "@/componets/form/AddProjectForm";
 import { isAuthenticated } from "@/libs/isAuthenticated.ts";
-import { StorageKeys, StorageService } from "@/libs/storageService";
 
 type Project = {
   id: string;
@@ -21,7 +20,6 @@ type Project = {
 };
 
 export const ProjectsPage = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [isAddingProject, setIsAddingProject] = useState(false);
 
@@ -30,8 +28,6 @@ export const ProjectsPage = () => {
     queryFn: getProjects,
     enabled: isAuthenticated(),
   });
-
-  console.log("projects", projects);
 
   const deleteMutation = useMutation({
     mutationFn: deleteProject,
@@ -47,24 +43,12 @@ export const ProjectsPage = () => {
     },
   });
 
-  const handleLogout = () => {
-    StorageService.removeItem(StorageKeys.token);
-    navigate("/login");
-  };
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString();
   };
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">GitHub Projects</h1>
-        <button onClick={handleLogout} className="btn btn-outline">
-          Logout
-        </button>
-      </div>
-
       <div className="mb-6">
         <div
           className={`collapse bg-base-100 border-base-300 border ${
@@ -77,6 +61,7 @@ export const ProjectsPage = () => {
           >
             Add New GitHub Project
           </div>
+
           <div className="collapse-content">
             <AddProjectForm
               onSuccess={() => {
@@ -89,9 +74,7 @@ export const ProjectsPage = () => {
       </div>
 
       {isLoading ? (
-        <div className="flex justify-center">
-          <span className="loading loading-spinner loading-lg"></span>
-        </div>
+        <Loader />
       ) : (
         <ul className="list bg-base-100 rounded-box shadow-md">
           <li className="p-4 pb-2 text-xs opacity-60 tracking-wide">Your GitHub Projects</li>
@@ -166,6 +149,7 @@ export const ProjectsPage = () => {
                     </svg>
                   )}
                 </button>
+
                 <button
                   className="btn btn-square btn-ghost text-error"
                   onClick={() => deleteMutation.mutate(project.id)}

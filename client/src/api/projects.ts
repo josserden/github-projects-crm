@@ -20,6 +20,6 @@ export const deleteProject = async (id: string) => {
 };
 
 export const refreshProject = async (id: string) => {
-  const response = await axios.post(`${API_URL}/projects/${id}/refresh`, {}, getAuthHeaders());
+  const response = await axios.post(`${API_URL}/api/projects/${id}/refresh`, {}, getAuthHeaders());
   return response.data;
 };
