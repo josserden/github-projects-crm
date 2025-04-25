@@ -1,6 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
-
 import { useNavigate } from "react-router";
+
+import { useMutation } from "@tanstack/react-query";
 
 import { register } from "@/api/auth.ts";
 import { AuthForm, AuthFormDataSchemaType } from "@/componets/auth/AuthForm";
