@@ -1,15 +1,16 @@
-import {
-  Injectable,
-  NotFoundException,
-  ConflictException,
-} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { GithubService } from '../github/github.service';
 import { User } from '../users/entities/users.entities';
+import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { Project } from './entities/project.entity';
-import { CreateProjectDto } from './dto/create-project.dto';
-import { GithubService } from '../github/github.service';
+import { Repository } from 'typeorm';
+
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ProjectsService {

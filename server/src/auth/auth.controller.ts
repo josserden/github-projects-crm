@@ -1,3 +1,10 @@
+import { CreateUserDto } from '../users/dto/create-user-dto';
+import { User } from '../users/entities/users.entities';
+import { AuthService } from './auth.service';
+import { GetUser } from './decorators/get-user.decorator';
+import { LoginDto } from './dto/login.dto';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+
 import {
   Body,
   Controller,
@@ -12,12 +19,6 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreateUserDto } from '../users/dto/create-user-dto';
-import { User } from '../users/entities/users.entities';
-import { AuthService } from './auth.service';
-import { GetUser } from './decorators/get-user.decorator';
-import { LoginDto } from './dto/login.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('auth')
 @Controller('auth')

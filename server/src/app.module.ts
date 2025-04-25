@@ -1,14 +1,15 @@
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { GithubModule } from './github/github.module';
+import { Project } from './projects/entities/project.entity';
+import { ProjectsModule } from './projects/projects.module';
+import { User } from './users/entities/users.entities';
+import { UsersModule } from './users/users.module';
+
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { Project } from './projects/entities/project.entity';
-import { User } from './users/entities/users.entities';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
-import { ProjectsModule } from './projects/projects.module';
-import { GithubModule } from './github/github.module';
 
 @Module({
   imports: [
