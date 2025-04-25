@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router";
-import { Layout } from "../componets/Layout";
+import { Layout } from "../componets/reusable/Layout";
 import { isAuthenticated } from "../libs/isAuthenticated.ts";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import { Routes } from "./routes.ts";

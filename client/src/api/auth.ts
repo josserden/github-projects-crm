@@ -8,6 +8,8 @@ export interface LoginPayload {
   password: string;
 }
 
+console.log("API_URL", API_URL);
+
 export const getAuthHeaders = () => {
   const token = StorageService.getItem(StorageKeys.token);
 
@@ -19,18 +21,18 @@ export const getAuthHeaders = () => {
 };
 
 export const login = async (data: LoginPayload) => {
-  const response = await axios.post(`${API_URL}/auth/login`, data);
+  const response = await axios.post(`${API_URL}/api/auth/login`, data);
   return response.data;
 };
 
 export const register = async (data: LoginPayload) => {
-  const response = await axios.post(`${API_URL}/auth/register`, data);
+  const response = await axios.post(`${API_URL}/api/auth/register`, data);
   return response.data;
 };
 
 export const logout = async () => {
   try {
-    await axios.post(`${API_URL}/auth/logout`, {}, getAuthHeaders());
+    await axios.post(`${API_URL}/api/auth/logout`, {}, getAuthHeaders());
     StorageService.removeItem(StorageKeys.token);
     StorageService.removeItem(StorageKeys.user);
     return true;

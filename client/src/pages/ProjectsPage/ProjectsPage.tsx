@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { deleteProject, getProjects, refreshProject } from "../../api/projects";
-import { AddProjectForm } from "../../componets/AddProjectForm";
+import { AddProjectForm } from "../../componets/form/AddProjectForm";
 import { StorageKeys, StorageService } from "../../libs/storageService";
 import { useNavigate } from "react-router";
 

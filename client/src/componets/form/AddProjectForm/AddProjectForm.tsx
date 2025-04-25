@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { createProject } from "../../api/projects.ts";
+import { createProject } from "../../../api/projects.ts";
 
 type AddProjectFormProps = {
   onSuccess: () => void;

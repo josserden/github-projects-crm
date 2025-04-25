@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { cn } from "../../libs/utils";
+import { cn } from "../../../libs/utils.ts";
 
 const schema = z.object({
   email: z.string().email("Invalid email address"),
@@ -70,13 +70,9 @@ export const AuthForm: FC<AuthFormProps> = ({
           </div>
         )}
 
-        <div className="mt-2">
-          <a className="link link-hover text-sm">Forgot password?</a>
-        </div>
-
         <button
           type="submit"
-          className="btn btn-primary w-full mt-4"
+          className="btn btn-primary w-full mt-4 text-white"
           disabled={isLoading}
         >
           {isLoading && (

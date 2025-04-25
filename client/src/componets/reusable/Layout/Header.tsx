@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useNavigate } from "react-router";
-import { logout } from "../../api/auth.ts";
-import { Routes } from "../../route/routes.ts";
+import { logout } from "../../../api/auth.ts";
+import { Routes } from "../../../route/routes.ts";
 
 export const Header: FC = () => {
   const navigate = useNavigate();
